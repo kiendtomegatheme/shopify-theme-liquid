@@ -34,6 +34,8 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'discount-tab.js' | asset_url }}" defer="defer"></script>
+  
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -47,6 +49,7 @@
   {%- endif -%}
 
   {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
+  {% assign quantity_options = "1,2,3,4,5,6,7,8,9,10" | split: ',' %}
   {%- if first_3d_model -%}
     {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
     <link
@@ -460,6 +463,38 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+
+                <div>
+                  <p>Shipping</p>
+                  <select name="shipping" id="shipping">
+                    <option value="standard">Standard shipping</option>
+                    <option value="fast">Fast shipping</option>
+                  </select>
+                </div>
+
+                <div>
+                  <p>Discount</p>
+
+                  {%- render 'discount-tab' -%}
+
+
+                  <select name="quantity" id="quantity">
+                    {% for q in quantity_options %}
+                      <option value="{{q}}">{{ q }}</option>
+                    {% endfor %}
+                  </select>
+                  <table>
+                    <tr>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                    </tr>
+                    <tr>
+                      <td>Buy 1 item</td>
+                      <td>10$</td>
+                    </tr>
+                  </table>
+                </div>
+
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
