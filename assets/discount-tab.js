@@ -18,6 +18,9 @@ class DiscountTab extends HTMLElement {
     // this.addEventListener('keyup', this.onKeyup.bind(this));
     // this.addEventListener('keydown', this.onKeydown.bind(this));
   }
+  test(){
+    console.log(1)
+  }
 }
 
 customElements.define('discount-tab', DiscountTab);
